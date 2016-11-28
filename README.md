@@ -21,6 +21,10 @@ module.exports = function (defaults) {
 
 Such config would add `my-private-addon` and `my-other-private-addon` tests to your app tests and run them in the test context of your application.
 
+## Installation
+
+* `ember install ember-cli-addon-tests`
+
 ## Running tests only in addon context
 
 After concatenation some of addon tests would fail as some addon pieces might be `extended` or `reopened` in the app or generally the app context might be different from the one in the addon. To mitigate those issues the special test helpers are provided that would help to run some of the tests only in proper context:
@@ -69,12 +73,9 @@ import {
 } from 'ember-cli-addon-tests';
 ```
 
-## Installation
+## Caveats
 
-* `git clone <repository-url>` this repository
-* `cd ember-cli-addon-tests`
-* `npm install`
-* `bower install`
+For now the default behaviour of tests concatenation is `overwrite`. Meaning if you have `tests/unit/my-awesome-test.js` in your `my-private-addon` addon and you also have `tests/unit/my-awesome-test.js` in the consuming app that uses `ember-cli-addon-tests` to concatenate tests from `my-private-addon` you would end up with just a single `tests/unit/my-awesome-test.js` originating from your app and not from `my-private-addon`. `ember-cli-addon-tests` does not currently provide any ways to alter this behaviour with renaming tests from addons but we are open for PR's for implementations of such feature.
 
 ## Running
 
