@@ -32,6 +32,13 @@ const wrapModuleFor = function(name, description, callbacks, wrappedFunc) {
       applyModuleToRegistry.apply(this, [modulePrefix]);
     };
   }
+  if (callbacks.needs || !callbacks.integration || callbacks.unit) {
+    if (!callbacks.needs) {
+      callbacks.needs = ['config:environment'];
+    } else if (callbacks.needs.indexOf('config:environment') === -1) {
+      callbacks.needs.push('config:environment');
+    }
+  }
   wrappedFunc(name, description, callbacks);
 };
 
