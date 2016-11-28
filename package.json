@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-addon-tests",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Run your Ember addon tests in your app context",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,11 +11,11 @@
     "start": "ember server",
     "test": "ember try:each"
   },
-  "repository": "",
+  "repository": "https://github.com/hanzo-es/ember-cli-addon-tests",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Kosikhin Petr <petr@hanzo.es>",
   "license": "MIT",
   "devDependencies": {
     "broccoli-merge-trees": "^1.1.4",
@@ -23,10 +23,15 @@
     "exists-sync": "0.0.4",
     "broccoli-funnel": "^1.0.6",
     "ember-cli-preprocess-registry": "^3.0.0",
-    "glob": "7.1.1"
+    "glob": "7.1.1",
+    "ember-cli-qunit": "^1.4.0"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember",
+    "addon",
+    "tests",
+    "ember-cli"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.6"
