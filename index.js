@@ -15,11 +15,15 @@ module.exports = {
 
   included(app) {
     var addons = app.options.emberCliAddonTests;
-    this.registryAddons = app.registry.app.project.addons.filter(function(addon) {
-      return addons.indexOf(addon.name) !== -1;
-    });
-    this.appName = app.name;
-    this.appRegistry = app.registry;
+    if (Array.isArray(addons)) {
+      this.registryAddons = app.registry.app.project.addons.filter(function(addon) {
+        return addons.indexOf(addon.name) !== -1;
+      });
+      this.appName = app.name;
+      this.appRegistry = app.registry;
+    } else {
+      this.registryAddons = [];
+    }
   },
 
   generateTestTreeForAddon(addon) {
@@ -39,7 +43,7 @@ module.exports = {
 
   postprocessTree(type, tree) {
     var self = this;
-    if (type === 'test') {
+    if (type === 'test' && this.registryAddons.length > 0) {
       var includedAddonTestTrees = this.registryAddons.map(function(addon) {
         return self.generateTestTreeForAddon(addon);
       });
