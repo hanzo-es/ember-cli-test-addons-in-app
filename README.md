@@ -39,7 +39,7 @@ import { test } from 'ember-qunit';
  
 moduleForComponent('some component', 'Integration | Component | some component', {
   integration: true,
-  modulePrefix: 'my-private-addon'
+  modulePrefixes: ['my-private-addon']
 });
  
 testInModule('things tested here would work only in addon context', function(assert) {
@@ -55,9 +55,9 @@ test('things tested here would work in both addon context and app context', func
 });
 ```
 
-In the example above special `moduleForComponent` is used instead of traditional provided by `ember-qunit`. This `moduleForComponent` takes advantage of `modulePrefix` property that you have to specify in your callbacks object and it should point to the module from which it originates as there is no way of knowing that at runtime.
+In the example above special `moduleForComponent` is used instead of traditional provided by `ember-qunit`. This `moduleForComponent` takes advantage of `modulePrefixes` property that you have to specify in your callbacks object and it should be an Array of modules.
 
-After you specify your `modulePrefix` you are free to use the `testInModule` helper instead of `test`. `testInModule` would make sure that the test would run only in the context of addon itself and gets ignored in the app context. The `modulePrefix` provided in callbacks is compared to the one provided within your `config/environment.js` to make that decision.
+After you specify your `modulePrefixes` you are free to use the `testInModule` helper instead of `test`. `testInModule` would make sure that the test would run only in the context of addons or apps specified in `modulePrefixes` and gets ignored in other contexts. The `modulePrefixes` provided in callbacks are compared to the one provided within your `config/environment.js` to make that decision.
 
 The test that should always run should be ran with `test` from `ember-qunit`
 
@@ -75,7 +75,9 @@ import {
 
 ## Caveats
 
-For now the default behaviour of tests concatenation is `overwrite`. Meaning if you have `tests/unit/my-awesome-test.js` in your `my-private-addon` addon and you also have `tests/unit/my-awesome-test.js` in the consuming app that uses `ember-cli-addon-tests` to concatenate tests from `my-private-addon` you would end up with just a single `tests/unit/my-awesome-test.js` originating from your app and not from `my-private-addon`. `ember-cli-addon-tests` does not currently provide any ways to alter this behaviour with renaming tests from addons but we are open for PR's for implementations of such feature.
+- For now the default behaviour of tests concatenation is `overwrite`. Meaning if you have `tests/unit/my-awesome-test.js` in your `my-private-addon` addon and you also have `tests/unit/my-awesome-test.js` in the consuming app that uses `ember-cli-addon-tests` to concatenate tests from `my-private-addon` you would end up with just a single `tests/unit/my-awesome-test.js` originating from your app and not from `my-private-addon`. `ember-cli-addon-tests` does not currently provide any ways to alter this behaviour with renaming tests from addons but we are open for PR's for implementations of such feature.
+
+- As qunit and ember-qunit `module` helper runs with no context there is no way to know what app/addon context we are using at runtime so the original `module` is swapped for call to `moduleFor` with `config:environment` as the `name`. This alters the test context behaviour and bootstraps isolated app container as `moduleFor` normally does. This allows to mute the tests for addon Mixins which are reopened in the app or other addons.
 
 ## Running
 
