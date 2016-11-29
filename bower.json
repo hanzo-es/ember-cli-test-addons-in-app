@@ -1,6 +1,0 @@
-{
-  "name": "ember-cli-addon-tests",
-  "dependencies": {
-    "ember": "2.8.3"
-  }
-}

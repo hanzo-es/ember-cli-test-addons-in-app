@@ -1,43 +1,53 @@
-import Ember from 'ember';
 import {
   moduleForComponent as qunitModuleForComponent,
   moduleForModel as qunitModuleForModel,
   moduleFor as qunitModuleFor
 } from 'ember-qunit';
 
-let ctx = {};
+let ctx;
 
-const applyModuleToRegistry = function(modulePrefix) {
-  const moduleRefObj = Ember.Object.extend({
-    modulePrefix: modulePrefix
-  });
-  this.register('testmodule:prefix', moduleRefObj);
-  ctx['context'] = this;
-};
-
-const wrapModuleFor = function(name, description, callbacks, wrappedFunc) {
-  let modulePrefix;
-  if (callbacks.modulePrefix) {
-    modulePrefix = callbacks.modulePrefix;
+const populateCallbacks = function(callbacks, isModule) {
+  let modulePrefixes;
+  if (callbacks.modulePrefixes) {
+    modulePrefixes = callbacks.modulePrefixes;
   }
   if (callbacks.beforeEach) {
     const beforeEachRef = callbacks.beforeEach;
 
     callbacks.beforeEach = function() {
       beforeEachRef.apply(this);
-      applyModuleToRegistry.apply(this, [modulePrefix]);
+      ctx = modulePrefixes;
     };
   } else {
     callbacks.beforeEach = function() {
-      applyModuleToRegistry.apply(this, [modulePrefix]);
+      ctx = modulePrefixes;
     };
   }
-  if (callbacks.needs || !callbacks.integration || callbacks.unit) {
+  if (callbacks.afterEach) {
+    const afterEachRef = callbacks.afterEach;
+
+    callbacks.afterEach = function() {
+      afterEachRef.apply(this);
+      ctx = null;
+    };
+  } else {
+    callbacks.afterEach = function() {
+      ctx = null;
+    };
+  }
+  if ((callbacks.needs || !callbacks.integration || callbacks.unit) && !isModule) {
     if (!callbacks.needs) {
       callbacks.needs = ['config:environment'];
     } else if (callbacks.needs.indexOf('config:environment') === -1) {
       callbacks.needs.push('config:environment');
     }
+  }
+  return callbacks;
+};
+
+const wrapModuleFor = function(name, description, callbacks, wrappedFunc, isModule=false) {
+  if (callbacks) {
+    populateCallbacks(callbacks, isModule);
   }
   wrappedFunc(name, description, callbacks);
 };
@@ -54,10 +64,15 @@ const moduleForModel = function(name, description, callbacks) {
   wrapModuleFor(name, description, callbacks, qunitModuleForModel);
 };
 
+const module = function(description, callbacks) {
+  wrapModuleFor('config:environment', description, callbacks, qunitModuleFor, true);
+};
+
 
 export {
   moduleForComponent,
   moduleFor,
   moduleForModel,
+  module,
   ctx
 };

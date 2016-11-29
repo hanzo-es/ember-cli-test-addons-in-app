@@ -4,13 +4,12 @@ import { ctx } from './module-for';
 const testInModule = function(name, testFunc) {
 
   function testWrapper(assert) {
-    const prefix = ctx;
-    const registeredModulePrefix = this.container.lookup('testmodule:prefix').modulePrefix;
+    const registeredModulePrefixes = ctx;
     const currentModulePrefix = this.container.lookupFactory('config:environment').modulePrefix;
-    if (!registeredModulePrefix) {
+    if (!registeredModulePrefixes || registeredModulePrefixes.length === 0) {
       testFunc(assert);
     } else {
-      if (registeredModulePrefix === currentModulePrefix) {
+      if (registeredModulePrefixes.indexOf(currentModulePrefix) > -1) {
         testFunc(assert);
       } else {
         assert.expect(0);
