@@ -32,7 +32,7 @@ module.exports = {
   },
 
   generateTestTreeForAddon(addon) {
-    var treePath = path.resolve(addon.root, 'tests');
+    var treePath = path.join(addon.root, 'tests');
     console.log('Path: ' + treePath);
     var preprocessedTests;
     if (existsSync(treePath)) {
