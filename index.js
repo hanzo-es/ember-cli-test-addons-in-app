@@ -3,7 +3,6 @@
 
 var mergeTrees    = require('broccoli-merge-trees');
 var path          = require('path');
-var existsSync    = require('exists-sync');
 var p             = require('ember-cli-preprocess-registry/preprocessors');
 var Funnel        = require('broccoli-funnel');
 
@@ -18,7 +17,7 @@ module.exports = {
     if (Array.isArray(addons)) {
       this.registryAddons = app.registry.app.project.addons.filter(function(addon) {
         if (addons.indexOf(addon.name) !== -1) {
-          console.log(addon.name)
+          console.log(addon.name);
           return true;
         } else {
           return false;
@@ -35,18 +34,14 @@ module.exports = {
     var treePath = path.join(addon.root, 'tests');
     console.log('Path: ' + treePath);
     var preprocessedTests;
-    if (existsSync(treePath)) {
-      var tree = new Funnel(treePath, {
-        destDir: this.appName + '/tests'
-      });
-      console.log('Funnel for ' + addon.name +': ' + tree);
-      preprocessedTests = preprocessJs(tree, '/tests', this.appName, {
-        registry: this.appRegistry
-      });
-      console.log('Babel tree for ' + addon.name +': ' + preprocessedTests);
-    } else {
-      throw Error('Path to concatenate addon tests does not exist');
-    }
+    var tree = new Funnel(treePath, {
+      destDir: this.appName + '/tests'
+    });
+    console.log('Funnel for ' + addon.name +': ' + tree);
+    preprocessedTests = preprocessJs(tree, '/tests', this.appName, {
+      registry: this.appRegistry
+    });
+    console.log('Babel tree for ' + addon.name +': ' + preprocessedTests);
     return preprocessedTests;
   },
 
