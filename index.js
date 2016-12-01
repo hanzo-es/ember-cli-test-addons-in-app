@@ -36,6 +36,8 @@ module.exports = {
       preprocessedTests = preprocessJs(tree, '/tests', this.appName, {
         registry: this.appRegistry
       });
+    } else {
+      throw Error("Path " + treePath + " does not exist. Please make sure you have specified the addon name to concatenate tests properly and that the tests/ folder is included in your addon's npm package");
     }
 
     return preprocessedTests;
