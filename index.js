@@ -11,7 +11,7 @@ var preprocessJs  = p.preprocessJs;
 
 
 module.exports = {
-  name: 'ember-test-addons-in-app',
+  name: 'ember-cli-test-addons-in-app',
 
   included(app) {
     var addons = app.options.emberCliAddonTests;
