@@ -3,8 +3,8 @@ import {
   moduleForComponent,
   moduleForModel,
   module
-} from 'ember-cli-addon-tests/utils/module-for';
-export { testInModule } from 'ember-cli-addon-tests/utils/qunit';
+} from 'ember-cli-test-addons-in-app/utils/module-for';
+export { testInModule } from 'ember-cli-test-addons-in-app/utils/qunit';
 
 export {
   module,

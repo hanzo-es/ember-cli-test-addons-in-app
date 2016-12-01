@@ -1,5 +1,5 @@
 {
-  "name": "ember-cli-addon-tests",
+  "name": "ember-cli-test-addons-in-app",
   "version": "0.0.1",
   "description": "Run your Ember addon tests in your app context",
   "directories": {
@@ -11,18 +11,19 @@
     "start": "ember server",
     "test": "ember try:each"
   },
-  "repository": "https://github.com/hanzo-es/ember-cli-addon-tests",
+  "repository": "https://github.com/hanzo-es/ember-cli-test-addons-in-app",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "Kosikhin Petr <petr@hanzo.es>",
+  "author": "Hanzo, Kosikhin Petr <petr@hanzo.es>",
   "license": "MIT",
   "keywords": [
     "ember-addon",
     "ember",
     "addon",
     "tests",
-    "ember-cli"
+    "ember-cli",
+    "app"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.6",

@@ -1,4 +1,4 @@
-# Ember-cli-addon-tests
+# Ember-cli-test-addons-in-app
 
 This README outlines the details of collaborating on this Ember addon.
 
@@ -23,7 +23,7 @@ Such config would add `my-private-addon` and `my-other-private-addon` tests to y
 
 ## Installation
 
-* `ember install ember-cli-addon-tests`
+* `ember install ember-cli-test-addons-in-app`
 
 ## Running tests only in addon context
 
@@ -33,7 +33,7 @@ After concatenation some of addon tests would fail as some addon pieces might be
 import { 
   moduleForComponent, 
   testInModule 
-} from 'ember-cli-addon-tests';
+} from 'ember-cli-test-addons-in-app';
  
 import { test } from 'ember-qunit';
  
@@ -70,12 +70,12 @@ import {
   moduleForModel,
   moduleFor,
   testInModule 
-} from 'ember-cli-addon-tests';
+} from 'ember-cli-test-addons-in-app';
 ```
 
 ## Caveats
 
-- For now the default behaviour of tests concatenation is `overwrite`. Meaning if you have `tests/unit/my-awesome-test.js` in your `my-private-addon` addon and you also have `tests/unit/my-awesome-test.js` in the consuming app that uses `ember-cli-addon-tests` to concatenate tests from `my-private-addon` you would end up with just a single `tests/unit/my-awesome-test.js` originating from your app and not from `my-private-addon`. `ember-cli-addon-tests` does not currently provide any ways to alter this behaviour with renaming tests from addons but we are open for PR's for implementations of such feature.
+- For now the default behaviour of tests concatenation is `overwrite`. Meaning if you have `tests/unit/my-awesome-test.js` in your `my-private-addon` addon and you also have `tests/unit/my-awesome-test.js` in the consuming app that uses `ember-cli-test-addons-in-app` to concatenate tests from `my-private-addon` you would end up with just a single `tests/unit/my-awesome-test.js` originating from your app and not from `my-private-addon`. `ember-cli-test-addons-in-app` does not currently provide any ways to alter this behaviour with renaming tests from addons but we are open for PR's for implementations of such feature.
 
 - As qunit and ember-qunit `module` helper runs with no context there is no way to know what app/addon context we are using at runtime so the original `module` is swapped for call to `moduleFor` with `config:environment` as the `name`. This alters the test context behaviour and bootstraps isolated app container as `moduleFor` normally does. This allows to mute the tests for addon Mixins which are reopened in the app or other addons.
 
